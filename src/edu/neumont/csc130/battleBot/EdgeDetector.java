@@ -1,7 +1,7 @@
 package edu.neumont.csc130.battleBot;
 
-import edu.neumone.csc130.eventHandling.CustomEvent;
-import edu.neumone.csc130.eventHandling.CustomListener;
+import edu.neumont.csc130.eventHandling.CustomEvent;
+import edu.neumont.csc130.eventHandling.CustomListener;
 import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
 

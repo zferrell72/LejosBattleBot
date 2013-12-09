@@ -1,4 +1,4 @@
-package edu.neumone.csc130.eventHandling;
+package edu.neumont.csc130.eventHandling;
 
 public class CustomEvent {
 	
