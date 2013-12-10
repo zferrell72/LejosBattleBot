@@ -8,12 +8,13 @@ import lejos.nxt.SensorPort;
 public class EdgeDetector implements CustomListener {
 
 	private LightSensor edgeSensor = new LightSensor(SensorPort.S4);
-	private MotorController motorController = new MotorController();
 	
+	private CustomEvent battleBotReference;
 	private Thread currentThread = Thread.currentThread();
 	
-	public EdgeDetector(){
+	public EdgeDetector(CustomEvent battleBotReference){
 		edgeSensor.calibrateHigh();
+		this.battleBotReference = battleBotReference;
 	}
 	
 	public boolean edgeFound(){
@@ -22,13 +23,8 @@ public class EdgeDetector implements CustomListener {
 
 	@Override
 	public void eventFired(CustomEvent event) {
-		motorController.moveBackward();
-		try{
-			Thread.sleep(750);
-		} catch (Exception e) {
-			// opps
-		}
-		motorController.turnAround();
+		BattleBot battleBot = (BattleBot) event.getSource();
+		battleBot.backUpFromEdge();
 	}
 	
 	@Override
@@ -38,8 +34,7 @@ public class EdgeDetector implements CustomListener {
 			//Check if the edge has been found
 			if(edgeFound()){
 				// If it has, fire that event!
-				CustomEvent event = new CustomEvent(this);
-				this.eventFired(event);
+				this.eventFired(battleBotReference);
 			}
 		}
 	}
@@ -51,17 +46,10 @@ public class EdgeDetector implements CustomListener {
 	public void setEdgeSensor(LightSensor edgeSensor) {
 		this.edgeSensor = edgeSensor;
 	}
-
-	public MotorController getMotorController() {
-		return motorController;
-	}
-
-	public void setMotorController(MotorController motorController) {
-		this.motorController = motorController;
-	}
-
-
 	
+	public Thread getEdgeDetectorThread(){
+		return currentThread;
+	}
 	
 	
 }
