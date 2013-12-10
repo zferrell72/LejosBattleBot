@@ -10,6 +10,8 @@ public class EdgeDetector implements CustomListener {
 	private LightSensor edgeSensor = new LightSensor(SensorPort.S4);
 	private MotorController motorController = new MotorController();
 	
+	private Thread currentThread = Thread.currentThread();
+	
 	public EdgeDetector(){
 		edgeSensor.calibrateHigh();
 	}
@@ -20,15 +22,26 @@ public class EdgeDetector implements CustomListener {
 
 	@Override
 	public void eventFired(CustomEvent event) {
-		// Back the robot up a small amount
-		// Turn the robot around
+		motorController.moveBackward();
+		try{
+			Thread.sleep(750);
+		} catch (Exception e) {
+			// opps
+		}
+		motorController.turnAround();
 	}
 	
 	@Override
 	public void run() {
 		// Loop forever!
+		while(!currentThread.isInterrupted()){
 			//Check if the edge has been found
+			if(edgeFound()){
 				// If it has, fire that event!
+				CustomEvent event = new CustomEvent(this);
+				this.eventFired(event);
+			}
+		}
 	}
 
 	public LightSensor getEdgeSensor() {
