@@ -10,6 +10,7 @@ public class ObjectDetector implements CustomListener{
 	private UltrasonicSensor ultraSonic = new UltrasonicSensor(SensorPort.S2);
 	private CustomEvent battleBotReference;
 	private int visualRange = 37;
+	private Thread thisThread = Thread.currentThread();
 	
 	public ObjectDetector(CustomEvent battleBotReference) {
 		this.battleBotReference = battleBotReference;
@@ -17,16 +18,17 @@ public class ObjectDetector implements CustomListener{
 	
 	@Override
 	public void eventFired(CustomEvent event) {
-		// 
+		// Have the battle bot do something
 		BattleBot theBot = (BattleBot)event.source;
+		theBot.attack();
 	}
 
 	@Override
 	public void run() {
 		//while forever
-		while(true){
+		while(!thisThread.isInterrupted()){
 			//Check if the object within visual range
-			if(ultraSonic.getDistance() <= visualRange){
+			if(isObjectInSensor()){
 				// If it has, fire that event!
 				eventFired(battleBotReference);
 			}
@@ -39,5 +41,9 @@ public class ObjectDetector implements CustomListener{
 
 	public void setVisualRange(int visualRange) {
 		this.visualRange = visualRange;
+	}
+	
+	public boolean isObjectInSensor(){
+		return ultraSonic.getDistance() <= visualRange;
 	}
 }
