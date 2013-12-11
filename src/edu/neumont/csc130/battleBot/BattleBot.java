@@ -5,15 +5,18 @@ import edu.neumont.csc130.eventHandling.CustomEvent;
 public class BattleBot {
 
 	private Thread edgeDetectionThread = new Thread(new EdgeDetector(new CustomEvent(this)));
+//	private Thread objectSensorThread = new Thread(new ObjectSensor(new CustomEvent(this)));
 	private MjollnirController hammerOfDawn = new MjollnirController();
 	private MotorController motorController = new MotorController();
 	
 	public BattleBot(){
-		edgeDetectionThread.run();
+		edgeDetectionThread.start();
 	}
 	
 	public void fight(){
-		 motorController.moveForward();
+		while(Thread.currentThread().isAlive()){
+			motorController.moveForward();
+		}
 	}
 	
 	public void backUpFromEdge(){
