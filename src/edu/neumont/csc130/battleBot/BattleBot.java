@@ -29,4 +29,8 @@ public class BattleBot {
 		motorController.turnAround();
 	}
 	
+	public void attack(){
+		hammerOfDawn.attack();
+	}
+	
 }
