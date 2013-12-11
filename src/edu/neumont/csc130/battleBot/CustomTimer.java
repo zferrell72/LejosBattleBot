@@ -15,22 +15,20 @@ public class CustomTimer implements CustomListener {
 	
 	public CustomTimer(CustomEvent event){
 		battleBotReference = event;
-		myTimer.schedule(new myTask(), 5000, 5000);
+		myTimer.schedule(new myTask(), 500, 500);
 	}
 	
 	@Override
 	public void eventFired(CustomEvent event) {
 		// Tell robot to turn around
 		BattleBot theBot = (BattleBot) battleBotReference.getSource();
+		theBot.stop();
 		theBot.turnAround();
 	}
 
 	@Override
 	public void run() {
 		// While thread has not been interrupted
-		while(!currentThread.isInterrupted()){
-			
-		}
 	}
 	
 	private class myTask extends TimerTask {
@@ -38,9 +36,11 @@ public class CustomTimer implements CustomListener {
 		@Override
 		public void run() {
 			// check if objectHasNotBeenFound
+			System.out.println("TIMER FIRED");
 			BattleBot theBot = (BattleBot) battleBotReference.getSource();
 			if(!theBot.isObjectHasBeenFoundRecently()){
 				// Fire Event
+				System.out.println("Timer stuff!");
 				eventFired(battleBotReference);
 			}
 		}

@@ -6,11 +6,11 @@ import lejos.nxt.NXTRegulatedMotor;
 
 public class MjollnirController {
 	NXTRegulatedMotor hammerMotor;
-	public static final int OVER_POWER = 1100;
+	public static final int OVER_POWER = 1000;
 	
 	public MjollnirController(){
 		hammerMotor = new NXTRegulatedMotor(MotorPort.A);
-		hammerMotor.setSpeed(OVER_POWER);
+		hammerMotor.setSpeed(hammerMotor.getMaxSpeed());
 	}
 	
 	public void setSpeed(int motorSpeed){
@@ -37,7 +37,7 @@ public class MjollnirController {
 	private void moveCounterClockwise() {
 		Motor.A.backward();
 		try {
-			Thread.sleep(300);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class MjollnirController {
 	private void moveClockwise() {
 		Motor.A.forward();
 		try {
-			Thread.sleep(300);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

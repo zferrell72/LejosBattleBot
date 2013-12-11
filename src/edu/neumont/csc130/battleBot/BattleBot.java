@@ -5,7 +5,8 @@ import edu.neumont.csc130.eventHandling.CustomEvent;
 public class BattleBot {
 
 	private Thread edgeDetectionThread = new Thread(new EdgeDetector(new CustomEvent(this)));
-//	private Thread objectSensorThread = new Thread(new ObjectSensor(new CustomEvent(this)));
+	private Thread objectSensorThread = new Thread(new ObjectDetector(new CustomEvent(this)));
+	private CustomTimer turnAroundTimer = new CustomTimer(new CustomEvent(this)); 
 	private MjollnirController hammerOfDawn = new MjollnirController();
 	private MotorController motorController = new MotorController();
 	
@@ -13,6 +14,7 @@ public class BattleBot {
 	
 	public BattleBot(){
 		edgeDetectionThread.start();
+		objectSensorThread.start();
 	}
 	
 	public void fight(){
@@ -21,7 +23,7 @@ public class BattleBot {
 		}
 	}
 	
-	public synchronized void backUpFromEdge(){
+	public void backUpFromEdge(){
 		motorController.moveBackward();
 		try{
 			Thread.sleep(750);
@@ -31,11 +33,15 @@ public class BattleBot {
 		motorController.turnAround();
 	}
 	
-	public synchronized void turnAround(){
+	public void turnAround(){
 		motorController.turnAround();
 	}
 	
-	public synchronized void attack(){
+	public void stop(){
+		motorController.stopBoth();
+	}
+	
+	public void attack(){
 		hammerOfDawn.attack();
 		objectHasBeenFoundRecently = false;
 	}

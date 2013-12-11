@@ -20,38 +20,38 @@ public class MotorController {
 		rightMotor = new NXTMotor(MotorPort.C);
 	}
 
-	public void turnLeft() {
+	public synchronized void turnLeft() {
 		rightMotor.setPower(turning);
 		rightMotor.backward();
 	}
 
-	public void turnRight() {
+	public synchronized void turnRight() {
 		leftMotor.setPower(turning);
 		leftMotor.backward();
 	}
 
-	public void moveForward() {
+	public synchronized void moveForward() {
 		rightMotor.setPower(forward);
 		leftMotor.setPower(forward);
 		rightMotor.backward();
 		leftMotor.backward();
 	}
 
-	public void moveForwardFullSpeed() {
+	public synchronized void moveForwardFullSpeed() {
 		rightMotor.setPower(fullPower);
 		leftMotor.setPower(fullPower);
 		rightMotor.backward();
 		leftMotor.backward();
 	}
 
-	public void moveBackward() {
+	public synchronized void moveBackward() {
 		rightMotor.setPower(backward);
 		leftMotor.setPower(backward);
 		rightMotor.forward();
 		leftMotor.forward();
 	}
 
-	public void stopBoth() {
+	public synchronized void stopBoth() {
 		rightMotor.stop();
 		leftMotor.stop();
 	}
@@ -86,9 +86,9 @@ public class MotorController {
 //
 //	}
 
-	public void turnAround() {
+	public synchronized void turnAround() {
 		try {
-			turnLeft();
+			turnRight();
 			Thread.sleep(2000);
 		} catch (Exception e) {
 			e.printStackTrace();
