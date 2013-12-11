@@ -9,6 +9,8 @@ public class BattleBot {
 	private MjollnirController hammerOfDawn = new MjollnirController();
 	private MotorController motorController = new MotorController();
 	
+	private boolean objectHasBeenFoundRecently = false;
+	
 	public BattleBot(){
 		edgeDetectionThread.start();
 	}
@@ -19,7 +21,7 @@ public class BattleBot {
 		}
 	}
 	
-	public void backUpFromEdge(){
+	public synchronized void backUpFromEdge(){
 		motorController.moveBackward();
 		try{
 			Thread.sleep(750);
@@ -29,8 +31,23 @@ public class BattleBot {
 		motorController.turnAround();
 	}
 	
-	public void attack(){
-		hammerOfDawn.attack();
+	public synchronized void turnAround(){
+		motorController.turnAround();
 	}
+	
+	public synchronized void attack(){
+		hammerOfDawn.attack();
+		objectHasBeenFoundRecently = false;
+	}
+
+	public boolean isObjectHasBeenFoundRecently() {
+		return objectHasBeenFoundRecently;
+	}
+
+	public void setObjectHasBeenFoundRecently(boolean objectHasBeenFoundRecently) {
+		this.objectHasBeenFoundRecently = objectHasBeenFoundRecently;
+	}
+	
+	
 	
 }

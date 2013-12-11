@@ -22,33 +22,33 @@ public class MotorController {
 
 	public void turnLeft() {
 		rightMotor.setPower(turning);
-		rightMotor.forward();
+		rightMotor.backward();
 	}
 
 	public void turnRight() {
 		leftMotor.setPower(turning);
-		leftMotor.forward();
+		leftMotor.backward();
 	}
 
 	public void moveForward() {
 		rightMotor.setPower(forward);
 		leftMotor.setPower(forward);
-		rightMotor.forward();
-		leftMotor.forward();
+		rightMotor.backward();
+		leftMotor.backward();
 	}
 
 	public void moveForwardFullSpeed() {
 		rightMotor.setPower(fullPower);
 		leftMotor.setPower(fullPower);
-		rightMotor.forward();
-		leftMotor.forward();
+		rightMotor.backward();
+		leftMotor.backward();
 	}
 
 	public void moveBackward() {
 		rightMotor.setPower(backward);
 		leftMotor.setPower(backward);
-		rightMotor.backward();
-		leftMotor.backward();
+		rightMotor.forward();
+		leftMotor.forward();
 	}
 
 	public void stopBoth() {

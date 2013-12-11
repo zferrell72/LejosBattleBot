@@ -20,6 +20,7 @@ public class ObjectDetector implements CustomListener{
 	public void eventFired(CustomEvent event) {
 		// Have the battle bot do something
 		BattleBot theBot = (BattleBot)event.source;
+		theBot.setObjectHasBeenFoundRecently(true);
 		theBot.attack();
 	}
 
